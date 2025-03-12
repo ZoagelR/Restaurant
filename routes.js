@@ -5,7 +5,7 @@ const {
   createMenu,
   updateMenu,
   deleteMenu,
-} = require("./controllers/menuController");
+} = require("./src/controllers/menuController");
 
 routes.get("/menu", getMenu);
 routes.post("/menu", createMenu);

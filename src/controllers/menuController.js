@@ -8,9 +8,9 @@ exports.getMenu = async (req, res) => {
       data: menu,
     });
   } catch (e) {
-    res.status(400).json({
-      status: "fail",
-      message: e,
+    console.log("error", e);
+    res.status(500).json({
+      message: "something went wrong",
     });
   }
 };
@@ -23,9 +23,9 @@ exports.createMenu = async (req, res) => {
       data: menu,
     });
   } catch (e) {
-    res.status(400).json({
-      status: "fail",
-      message: e,
+    console.log("error", e);
+    res.status(500).json({
+      message: "Something went wrong",
     });
   }
 };
@@ -36,37 +36,42 @@ exports.updateMenu = async (req, res) => {
       new: true,
     });
     if (!menu) {
-      return res.status(404).json({
+      console.log("error", e);
+      return res.status(500).json({
         status: "fail",
         message: "Food not found",
       });
     }
-    res.json(menu);
+
+    res.status(200).json(menu);
   } catch (e) {
-    res.status(400).json({
+    console.log("error", e);
+    res.status(500).json({
       status: "fail",
-      message: e,
+      message: "Something went wrong",
     });
   }
 };
 
 exports.deleteMenu = async (req, res) => {
   try {
+    const menuId = req.params.id;
     const menu = await Menu.findByIdAndDelete(req.params.id);
     if (!menu) {
-      return res.status(404).json({
+      return res.status(500).json({
         status: "fail",
-        message: "Food not found",
+        message: "Something went wrong",
       });
     }
-    res.json({
+
+    res.status(204).json({
       status: "success",
       message: "Menu deleted",
     });
   } catch (e) {
-    res.json({
+    res.status(500).json({
       status: "fail",
-      message: e,
+      message: "Something went wrong",
     });
   }
 };
